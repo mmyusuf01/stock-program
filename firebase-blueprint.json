@@ -1,0 +1,407 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and assigned store",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address",
+          "maxLength": 256
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the user",
+          "maxLength": 120
+        },
+        "role": {
+          "type": "string",
+          "description": "Access control role",
+          "enum": ["admin", "staff"]
+        },
+        "assignedStoreId": {
+          "type": "number",
+          "description": "ID of store the staff is assigned to"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["uid", "email", "name", "role"]
+    },
+    "Store": {
+      "title": "Store",
+      "description": "Retail branch store location",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Numeric store ID"
+        },
+        "code": {
+          "type": "string",
+          "description": "Store code identifier",
+          "maxLength": 32,
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Store outlet name",
+          "maxLength": 128
+        },
+        "city": {
+          "type": "string",
+          "description": "City where store is located",
+          "maxLength": 64
+        },
+        "address": {
+          "type": "string",
+          "description": "Physical address",
+          "maxLength": 256
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number",
+          "maxLength": 32
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Whether store is operating"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["id", "code", "name", "city", "isActive"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product classification category",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Numeric category ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Category name",
+          "maxLength": 64
+        },
+        "code": {
+          "type": "string",
+          "description": "Short category code",
+          "maxLength": 32
+        }
+      },
+      "required": ["id", "name", "code"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Catalog master SKU item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Product unique ID"
+        },
+        "sku": {
+          "type": "string",
+          "description": "Stock keeping unit",
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "barcode": {
+          "type": "string",
+          "description": "Barcode number (EAN/UPC/Code128)",
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "description": "Product title",
+          "maxLength": 200
+        },
+        "categoryId": {
+          "type": "number",
+          "description": "Reference category ID"
+        },
+        "categoryName": {
+          "type": "string",
+          "description": "Category name label",
+          "maxLength": 64
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of measurement",
+          "maxLength": 32
+        },
+        "costPrice": {
+          "type": "number",
+          "description": "Purchase cost in currency units"
+        },
+        "sellingPrice": {
+          "type": "number",
+          "description": "Retail selling price"
+        },
+        "minStockThreshold": {
+          "type": "number",
+          "description": "Minimum stock warning threshold"
+        },
+        "description": {
+          "type": "string",
+          "description": "Product specifications",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["id", "sku", "barcode", "name", "unit", "costPrice", "sellingPrice", "minStockThreshold"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Stock balance record for product at specific store",
+      "type": "object",
+      "properties": {
+        "inventoryId": {
+          "type": "number",
+          "description": "Unique inventory record ID"
+        },
+        "storeId": {
+          "type": "number",
+          "description": "Store ID"
+        },
+        "productId": {
+          "type": "number",
+          "description": "Product ID"
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU code",
+          "maxLength": 64
+        },
+        "barcode": {
+          "type": "string",
+          "description": "Barcode",
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "description": "Product name",
+          "maxLength": 200
+        },
+        "categoryName": {
+          "type": "string",
+          "description": "Category name",
+          "maxLength": 64
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of measurement",
+          "maxLength": 32
+        },
+        "costPrice": {
+          "type": "number",
+          "description": "Cost price"
+        },
+        "sellingPrice": {
+          "type": "number",
+          "description": "Selling price"
+        },
+        "minStockThreshold": {
+          "type": "number",
+          "description": "Minimum threshold"
+        },
+        "stockQuantity": {
+          "type": "number",
+          "description": "Current on-hand stock quantity"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last stock change timestamp"
+        }
+      },
+      "required": ["inventoryId", "storeId", "productId", "stockQuantity"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Audit trail log of all stock movements",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Log record ID"
+        },
+        "storeId": {
+          "type": "number",
+          "description": "Store ID"
+        },
+        "storeName": {
+          "type": "string",
+          "description": "Store branch name",
+          "maxLength": 128
+        },
+        "productId": {
+          "type": "number",
+          "description": "Product ID"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Product name",
+          "maxLength": 200
+        },
+        "sku": {
+          "type": "string",
+          "description": "SKU code",
+          "maxLength": 64
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit",
+          "maxLength": 32
+        },
+        "changeType": {
+          "type": "string",
+          "description": "Movement classification",
+          "enum": ["RESTOCK_IN", "SALE_OUT", "ADJUSTMENT", "TRANSFER_IN", "TRANSFER_OUT", "RETURN"]
+        },
+        "quantityDelta": {
+          "type": "number",
+          "description": "Signed quantity change"
+        },
+        "stockBefore": {
+          "type": "number",
+          "description": "Stock count prior to change"
+        },
+        "stockAfter": {
+          "type": "number",
+          "description": "Stock count after change"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "Invoice, PO, or adjustment code",
+          "maxLength": 64
+        },
+        "notes": {
+          "type": "string",
+          "description": "Transaction notes",
+          "maxLength": 256
+        },
+        "performedByUid": {
+          "type": "string",
+          "description": "UID of operator",
+          "maxLength": 128
+        },
+        "performedByName": {
+          "type": "string",
+          "description": "Operator name",
+          "maxLength": 120
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Event timestamp"
+        }
+      },
+      "required": ["storeId", "productId", "changeType", "quantityDelta", "performedByUid", "performedByName"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "Alert notification for low stock or system events",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Notification ID"
+        },
+        "storeId": {
+          "type": "number",
+          "description": "Store ID"
+        },
+        "storeName": {
+          "type": "string",
+          "description": "Store name",
+          "maxLength": 128
+        },
+        "productId": {
+          "type": "number",
+          "description": "Product ID"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Product name",
+          "maxLength": 200
+        },
+        "type": {
+          "type": "string",
+          "description": "Alert type",
+          "enum": ["LOW_STOCK", "OUT_OF_STOCK", "TRANSFER_UPDATE", "SYNC_SUCCESS"]
+        },
+        "title": {
+          "type": "string",
+          "description": "Alert title",
+          "maxLength": 128
+        },
+        "message": {
+          "type": "string",
+          "description": "Alert message body",
+          "maxLength": 500
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Read status"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["type", "title", "message", "isRead"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and role access"
+    },
+    "/stores/{storeId}": {
+      "schema": "Store",
+      "description": "Retail store branch locations"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product classifications"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog product items"
+    },
+    "/inventory/{inventoryId}": {
+      "schema": "InventoryItem",
+      "description": "Store stock quantities"
+    },
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Audit trail log records"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "NotificationItem",
+      "description": "System and stock warning alerts"
+    }
+  }
+}

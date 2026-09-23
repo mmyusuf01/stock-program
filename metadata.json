@@ -1,0 +1,10 @@
+{
+  "name": "Remix Remix Remix Stock System Store RDBMS",
+  "description": "Aplikasi RDBMS manajemen inventaris multi-toko dengan pemindai barcode, log aktivitas, analitik stok real-time, dan ekspor-impor data massal.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

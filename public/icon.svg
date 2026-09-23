@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="108" fill="url(#grad1)" />
+  
+  <!-- Subtle inner background grid or circle -->
+  <circle cx="256" cy="256" r="180" fill="#ffffff" fill-opacity="0.08" />
+
+  <!-- Main Database + Box Icon -->
+  <g filter="url(#shadow)" transform="translate(106, 106)">
+    <!-- Top Cylinder of Database -->
+    <path d="M150 30 C220 30 270 50 270 75 C270 100 220 120 150 120 C80 120 30 100 30 75 C30 50 80 30 150 30 Z" fill="#ffffff" />
+    
+    <!-- Middle Tier -->
+    <path d="M30 75 L30 135 C30 160 80 180 150 180 C220 180 270 160 270 135 L270 75 C270 100 220 120 150 120 C80 120 30 100 30 75 Z" fill="#e2e8f0" />
+    
+    <!-- Bottom Tier -->
+    <path d="M30 135 L30 195 C30 220 80 240 150 240 C220 240 270 220 270 195 L270 135 C270 160 220 180 150 180 C80 180 30 160 30 135 Z" fill="#cbd5e1" />
+
+    <!-- Foreground floating Package/Barcode Badge -->
+    <rect x="130" y="140" width="130" height="120" rx="18" fill="url(#grad2)" />
+    <!-- Barcode stripes -->
+    <rect x="150" y="165" width="8" height="70" rx="3" fill="#ffffff" />
+    <rect x="166" y="165" width="16" height="70" rx="4" fill="#ffffff" />
+    <rect x="190" y="165" width="6" height="70" rx="2" fill="#ffffff" />
+    <rect x="204" y="165" width="14" height="70" rx="4" fill="#ffffff" />
+    <rect x="226" y="165" width="16" height="70" rx="4" fill="#ffffff" />
+  </g>
+</svg>

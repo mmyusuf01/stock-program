@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'yusufmln761@gmail.com' ||
+        (request.auth.token.email != null && request.auth.token.email.matches('.*admin.*')) ||
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Connection testing endpoint for health check
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow get: if isSignedIn() && (isUser(userId) || isAdmin());
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && (isUser(userId) || isAdmin());
+      allow update: if isSignedIn() && (isUser(userId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Stores collection
+    match /stores/{storeId} {
+      allow read: if isSignedIn() || true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // Categories collection
+    match /categories/{categoryId} {
+      allow read: if isSignedIn() || true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // Products collection
+    match /products/{productId} {
+      allow read: if isSignedIn() || true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // Inventory collection
+    match /inventory/{inventoryId} {
+      allow read: if isSignedIn() || true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // Activity Logs collection
+    match /activityLogs/{logId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    // Notifications collection
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isAdmin();
+    }
+  }
+}
